@@ -28,6 +28,7 @@ export function createSignal<T>(initial: T) {
         return () => emitter.off('change', callback);
       },
       () => value,
+      () => value,
     );
 
     return [stateValue, update] as const;

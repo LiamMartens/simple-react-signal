@@ -1,7 +1,7 @@
 {
   "name": "simple-react-signal",
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Simple signal library for React. Can be used to create reactive values outside of the React lifecycle.",
   "module": "./lib/index.js",
   "types": "./lib/index.d.ts",
