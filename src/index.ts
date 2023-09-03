@@ -18,14 +18,19 @@ export interface CreateSignalResult<T> {
 
 const mitt = defaultImport($mitt);
 
-export function createSignal<T>(initial: T): CreateSignalResult<T> {
+export function createSignal<T>(
+  initial: T,
+  equals: (current: T, incoming: T) => boolean = (c, t) => c == t
+): CreateSignalResult<T> {
   let value = initial;
   const emitter = mitt<SignalEvents<T>>();
 
   function update(input: T) {
     const previousValue = value;
     value = input;
-    emitter.emit('change', { value, previousValue });
+    if (!equals(value, previousValue)) {
+      emitter.emit('change', { value, previousValue });
+    }
   }
 
   function useSignal() {
