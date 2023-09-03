@@ -37,6 +37,7 @@ export function createSignal<T>(initial: T) {
   return {
     update,
     value,
+    emitter,
     use: useSignal,
   };
 }
