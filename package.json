@@ -1,0 +1,43 @@
+{
+  "name": "simple-react-signal",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Simple signal library for React. Can be used to create reactive values outside of the React lifecycle.",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "author": "Liam Martens <hi@liammartens.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LiamMartens/simple-react-signal.git"
+  },
+  "homepage": "https://github.com/LiamMartens/simple-react-signal",
+  "bugs": {
+    "url": "https://github.com/LiamMartens/simple-react-signal/issues"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^18.2.21",
+    "react": "^18.2.0",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0||^18.0.0"
+  },
+  "dependencies": {
+    "default-import": "^1.1.5",
+    "mitt": "^3.0.1"
+  }
+}
