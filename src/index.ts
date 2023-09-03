@@ -1,17 +1,24 @@
-import $mitt from 'mitt';
+import $mitt, { Emitter } from 'mitt';
 import { defaultImport } from 'default-import';
 import { useSyncExternalStore } from 'react';
 
-type SignalEvents<T> = {
+export type SignalEvents<T> = {
   change: {
     value: T;
     previousValue: T;
   };
 };
 
+export interface CreateSignalResult<T> {
+  value: T;
+  emitter: Emitter<SignalEvents<T>>;
+  use(): readonly [T, (value: T) => void];
+  update(value: T): void;
+}
+
 const mitt = defaultImport($mitt);
 
-export function createSignal<T>(initial: T) {
+export function createSignal<T>(initial: T): CreateSignalResult<T> {
   let value = initial;
   const emitter = mitt<SignalEvents<T>>();
 
@@ -28,7 +35,7 @@ export function createSignal<T>(initial: T) {
         return () => emitter.off('change', callback);
       },
       () => value,
-      () => value,
+      () => value
     );
 
     return [stateValue, update] as const;
@@ -41,4 +48,3 @@ export function createSignal<T>(initial: T) {
     use: useSignal,
   };
 }
-
