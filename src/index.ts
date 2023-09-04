@@ -10,7 +10,7 @@ export type SignalEvents<T> = {
 };
 
 export interface CreateSignalResult<T> {
-  value: T;
+  ref: { current: T };
   history: Set<T>;
   emitter: Emitter<SignalEvents<T>>;
   use(): readonly [T, (value: T) => void];
@@ -23,16 +23,16 @@ export function createSignal<T>(
   initial: T,
   equals: (current: T, incoming: T) => boolean = (c, t) => c == t
 ): CreateSignalResult<T> {
-  let value = initial;
+  const valueRef = { current: initial };
   let historySet = new Set<T>([initial]);
   const emitter = mitt<SignalEvents<T>>();
 
   function update(input: T) {
-    const previousValue = value;
-    value = input;
-    if (!equals(value, previousValue)) {
-      historySet.add(value);
-      emitter.emit('change', { value, previousValue });
+    const previousValue = valueRef.current;
+    valueRef.current = input;
+    if (!equals(valueRef.current, previousValue)) {
+      historySet.add(valueRef.current);
+      emitter.emit('change', { value: valueRef.current, previousValue });
     }
   }
 
@@ -42,8 +42,8 @@ export function createSignal<T>(
         emitter.on('change', callback);
         return () => emitter.off('change', callback);
       },
-      () => value,
-      () => value
+      () => valueRef.current,
+      () => valueRef.current
     );
 
     return [stateValue, update] as const;
@@ -51,7 +51,7 @@ export function createSignal<T>(
 
   return {
     update,
-    value,
+    ref: valueRef,
     emitter,
     history: historySet,
     use: useSignal,
