@@ -1,6 +1,6 @@
 import $mitt, { Emitter } from 'mitt';
 import { defaultImport } from 'default-import';
-import { useSyncExternalStore } from 'use-sync-external-store/shim';
+import { useSyncExternalStore } from 'use-sync-external-store/shim/index.js';
 
 export type SignalEvents<T> = {
   change: {
