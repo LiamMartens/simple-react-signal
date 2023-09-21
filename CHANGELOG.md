@@ -1,5 +1,8 @@
 # simple-react-signal
 
+## 1.8.0
+- Add `createComputed`
+
 ## 1.6.1
 - Fix `shim` import
 
